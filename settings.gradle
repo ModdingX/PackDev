@@ -1,0 +1,4 @@
+rootProject.name = 'PackDev'
+include('plugin')
+include('plugin-forge')
+include('plugin-fabric')

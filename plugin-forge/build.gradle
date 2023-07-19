@@ -1,0 +1,8 @@
+repositories {
+    maven { url = 'https://maven.minecraftforge.net' }
+}
+
+dependencies {
+    compileOnly project(':plugin')
+    compileOnly 'net.minecraftforge.gradle:ForgeGradle:6.0.11'
+}

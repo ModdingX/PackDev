@@ -1,0 +1,8 @@
+repositories {
+    maven { url = 'https://maven.fabricmc.net' }
+}
+
+dependencies {
+    compileOnly project(':plugin')
+    compileOnly 'net.fabricmc:fabric-loom:1.3.8'
+}

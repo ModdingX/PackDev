@@ -1,0 +1,54 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+}
+
+dependencies {
+    api('com.google.code.findbugs:jsr305') { version { strictly '[3.0.2,)'; prefer '3.0.2' } }
+    api('com.google.code.gson:gson') { version { strictly '[2.10.1,)'; prefer '2.10.1' } }
+    api('com.google.guava:guava') { version { strictly '[32.0.1-jre,)'; prefer '32.0.1-jre' } }
+    api('commons-io:commons-io') { version { strictly '[2.13.0,)'; prefer '2.13.0' } }
+    api('org.moddingx:CurseWrapper') { version { strictly '[3.2,4.0)'; prefer '3.2' } }
+    api('org.moddingx:LauncherLib') { version { strictly '[1.1.1,1.2.0)'; prefer '1.1.1' } }
+}
+
+gradlePlugin {
+    plugins {
+        packdev {
+            id = 'org.moddingx.packdev'
+            implementationClass = 'org.moddingx.packdev.PackDevPlugin'
+        }
+    }
+}
+
+jar {
+    dependsOn project(':plugin-forge').jar
+    dependsOn project(':plugin-fabric').jar
+    
+    from zipTree(project(':plugin-forge').jar.archiveFile), { exclude 'META-INF/**' }
+    from zipTree(project(':plugin-fabric').jar.archiveFile), { exclude 'META-INF/**' }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            groupId = rootProject.group
+            artifactId = rootProject.name
+            version = rootProject.version
+            pom {
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url rootProject.file('../moddingx/maven')
+        }
+    }
+}
