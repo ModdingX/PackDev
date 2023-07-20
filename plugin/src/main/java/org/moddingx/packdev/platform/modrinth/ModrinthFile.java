@@ -81,7 +81,7 @@ public class ModrinthFile extends BaseModFile {
 
     @Override
     public Artifact createDependency() {
-        return Artifact.from("maven.modrinth", this.projectSlug(), this.versionInfo().versionNumber());
+        return Artifact.from("maven.modrinth", this.projectSlug(), this.versionId);
     }
 
     @Override
