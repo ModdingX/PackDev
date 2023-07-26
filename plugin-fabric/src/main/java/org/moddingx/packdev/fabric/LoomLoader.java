@@ -69,7 +69,6 @@ public abstract class LoomLoader implements ModLoader<Void> {
             settings.getApplyDependencyTransforms().set(true);
         });
         
-                
         for (ModFile file : files) {
             Artifact artifact = file.createDependency();
             switch (file.fileSide()) {

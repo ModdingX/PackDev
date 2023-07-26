@@ -11,6 +11,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ExternalModuleDependency;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -120,7 +121,13 @@ public class ForgeLoader implements ModLoader<Void> {
             });
         });
 
+        // Required if mods are provided through the mods folder (because they don't exist on the platform)
+        // Delete old mods from the mods folder, so we correctly handle mod removals.
+        Delete deleteTask = project.getTasks().create("delete" + capitalized + "Data", Delete.class);
+        deleteTask.delete(new File(workingDir, "mods"));
+        
         Copy copyTask = project.getTasks().create("copy" + capitalized + "Data", Copy.class);
+        copyTask.dependsOn(deleteTask);
         copyTask.setDestinationDir(workingDir);
         for (Path path : paths.getOverridePaths(side)) {
             copyTask.from(project.fileTree(path.toFile()));
