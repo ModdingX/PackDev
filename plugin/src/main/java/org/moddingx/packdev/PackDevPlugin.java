@@ -6,6 +6,9 @@ import com.google.gson.JsonSyntaxException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.ExternalModuleDependency;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.build.event.BuildEventsListenerRegistry;
@@ -16,6 +19,8 @@ import org.moddingx.packdev.loader.LoaderSettingsConsumer;
 import org.moddingx.packdev.loader.ModLoader;
 import org.moddingx.packdev.platform.ModFile;
 import org.moddingx.packdev.platform.ModdingPlatform;
+import org.moddingx.packdev.util.DependencyConstants;
+import org.moddingx.packdev.util.MoonstoneTask;
 import org.moddingx.packdev.util.Util;
 
 import javax.annotation.Nonnull;
@@ -28,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public abstract class PackDevPlugin implements Plugin<Project> {
 
@@ -96,6 +102,18 @@ public abstract class PackDevPlugin implements Plugin<Project> {
         int javaVersion = cache.getJavaVersion(minecraftVersion);
         Util.getJavaExtension(project).getToolchain().getLanguageVersion().set(JavaLanguageVersion.of(javaVersion));
 
+        DependencyConstants.addRepositories(project);
+        Configuration moonstone = project.getConfigurations().create("moonstone", c -> {
+            c.setCanBeResolved(true);
+            c.setCanBeConsumed(false);
+            c.resolutionStrategy(rs -> {
+                rs.cacheChangingModulesFor(30, TimeUnit.MINUTES);
+                rs.cacheDynamicVersionsFor(30, TimeUnit.MINUTES);
+            });
+        });
+        Dependency moonstoneDependency = project.getDependencies().add(moonstone.getName(), DependencyConstants.MOONSTONE);
+        if (moonstoneDependency instanceof ExternalModuleDependency emd) emd.setChanging(true);
+        
         platform.initialise(project);
         List<ModFile> files = List.copyOf(platform.readModList(project, cache, fileData));
         
@@ -114,6 +132,8 @@ public abstract class PackDevPlugin implements Plugin<Project> {
         PackDevExtension ext = project.getExtensions().create(PackDevExtension.EXTENSION_NAME, PackDevExtension.class, loaderSettingsAcceptor);
         
         project.afterEvaluate(p -> {
+            project.getTasks().register("moonstone", MoonstoneTask.class, t -> t.classpath(project.provider(moonstone::resolve)));
+            
             PackSettings settings = new PackSettings(
                     Objects.requireNonNull(p.getName(), "Project name not set"),
                     Objects.requireNonNull(p.getVersion(), "Project version not set").toString(),
