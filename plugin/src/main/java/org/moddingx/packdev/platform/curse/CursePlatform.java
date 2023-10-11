@@ -25,10 +25,11 @@ public class CursePlatform implements ModdingPlatform<CurseFile> {
 
     @Override
     public void initialise(Project project) {
-        project.getRepositories().maven(r -> {
-            r.setUrl(CurseUtil.CURSE_MAVEN);
-            r.content(c -> c.includeGroup("curse.maven"));
-        });
+        project.afterEvaluate((ignored) ->
+                project.getRepositories().maven(r -> {
+                    r.setUrl(CurseUtil.CURSE_MAVEN);
+                    r.content(c -> c.includeGroup("curse.maven"));
+                }));
     }
 
     @Override
