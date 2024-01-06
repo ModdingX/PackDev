@@ -143,6 +143,10 @@ public abstract class PackDevPlugin implements Plugin<Project> {
             );
             
             loaderInstance.afterEvaluate(p, settings, loaderData);
+
+            Task buildTargetsTask = project.getTasks().create("buildTargets");
+            Task buildTask = project.getTasks().findByName("build");
+            if (buildTask != null) buildTask.dependsOn(buildTargetsTask);
             
             Map<String, Optional<Object>> targets = ext.getAllTargets();
             if (targets.isEmpty()) {
@@ -150,12 +154,12 @@ public abstract class PackDevPlugin implements Plugin<Project> {
             } else {
                 targets.entrySet().stream()
                         .sorted(Map.Entry.comparingByKey())
-                        .forEach(target -> addBuildTask(project, target.getKey(), platform, settings, files, target.getValue().orElse(null)));
+                        .forEach(target -> addBuildTask(project, target.getKey(), platform, settings, files, target.getValue().orElse(null), buildTargetsTask));
             }
         });
     }
 
-    private static void addBuildTask(Project project, String id, ModdingPlatform<?> platform, PackSettings settings, List<ModFile> files, @Nullable Object properties) {
+    private static void addBuildTask(Project project, String id, ModdingPlatform<?> platform, PackSettings settings, List<ModFile> files, @Nullable Object properties, Task buildTargetsTask) {
         Task task = PackDevRegistry.createTargetTask(project, id, platform, settings, files, properties);
         if (task instanceof AbstractArchiveTask archive) {
             archive.getDestinationDirectory().set(project.file("build").toPath().resolve("target").toFile());
@@ -163,7 +167,6 @@ public abstract class PackDevPlugin implements Plugin<Project> {
             archive.getArchiveVersion().convention(project.provider(() -> project.getVersion().toString()));
             archive.getArchiveClassifier().convention(id.toLowerCase(Locale.ROOT));
         }
-        Task buildTask = project.getTasks().findByName("build");
-        if (buildTask != null) buildTask.dependsOn(task);
+        buildTargetsTask.dependsOn(task);
     }
 }

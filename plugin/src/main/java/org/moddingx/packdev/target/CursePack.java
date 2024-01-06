@@ -58,6 +58,7 @@ public class CursePack<T extends ModFile> extends BaseTargetTask<T> {
             case LoaderConstants.FORGE -> modLoader.addProperty("id", "forge-" + this.settings.loaderVersion());
             case LoaderConstants.FABRIC -> modLoader.addProperty("id", "fabric-" + this.settings.loaderVersion());
             case LoaderConstants.QUILT -> modLoader.addProperty("id", "quilt-" + this.settings.loaderVersion());
+            case LoaderConstants.NEOFORGE -> modLoader.addProperty("id", "neoforge-" + this.settings.loaderVersion());
             default -> throw new IllegalStateException("Loader not supported by CurseForge: " + this.settings.loader());
         }
         modLoader.addProperty("primary", true);

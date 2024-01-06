@@ -23,8 +23,9 @@ public class ServerPack<T extends ModFile> extends BaseTargetTask<T> {
 
     private static final Map<String, String> INSTALLER_VERSIONS = Map.of(
             LoaderConstants.FORGE, "", // Forge has no separate installer
-            LoaderConstants.FABRIC, "0.11.2",
-            LoaderConstants.QUILT, "0.8.0"
+            LoaderConstants.FABRIC, "1.0.0",
+            LoaderConstants.QUILT, "0.9.1",
+            LoaderConstants.NEOFORGE, "" // NeoForge has no separate installer
     );
     
     @Inject

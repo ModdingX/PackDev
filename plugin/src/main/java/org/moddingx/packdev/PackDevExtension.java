@@ -136,7 +136,8 @@ public class PackDevExtension extends GroovyObjectSupport {
             System.err.println("""
                                Using official mojang names in PackDev.
                                This can cause problems importing the gradle project or running the game from the IDE.
-                               Try disabling them before reporting any issues.""");
+                               Try disabling them before reporting any issues.
+                               """);
             this.officialMappings = true;
         }
     }

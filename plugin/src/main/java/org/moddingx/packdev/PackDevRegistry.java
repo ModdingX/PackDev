@@ -34,6 +34,7 @@ public class PackDevRegistry {
         registerLoader(LoaderConstants.FORGE, "net.minecraftforge.gradle", "org.moddingx.packdev.forge.ForgeLoader");
         registerLoader(LoaderConstants.FABRIC, "fabric-loom", "org.moddingx.packdev.fabric.FabricLoader");
         registerLoader(LoaderConstants.QUILT, "org.quiltmc.loom", "org.moddingx.packdev.fabric.QuiltLoader");
+        registerLoader(LoaderConstants.NEOFORGE, "net.neoforged.gradle.userdev", "org.moddingx.packdev.neoforge.NeoForgeLoader");
         
         registerTarget("curse", CursePack.class, CurseProperties.class);
         registerTarget("modrinth", ModrinthPack.class);
@@ -51,11 +52,7 @@ public class PackDevRegistry {
     }
 
     public static synchronized void registerLoader(String id, String loaderPlugin, String loaderClass) {
-        if (loaders.containsKey(id)) {
-            throw new IllegalStateException("Duplicate modpack loader: " + id);
-        } else {
-            loaders.put(id, new LoaderData(List.of(loaderPlugin), loaderClass));
-        }
+        registerLoader(id, List.of(loaderPlugin), loaderClass);
     }
 
     public static synchronized void registerLoader(String id, List<String> loaderPlugins, String loaderClass) {

@@ -1,8 +1,10 @@
 repositories {
     maven { url = 'https://maven.fabricmc.net' }
+    maven { url = 'https://maven.quiltmc.org/repository/release' }
 }
 
 dependencies {
     compileOnly project(':plugin')
-    compileOnly 'net.fabricmc:fabric-loom:1.3.8'
+    compileOnly 'net.fabricmc:fabric-loom:1.5.2'
+//    compileOnly 'org.quiltmc:loom:1.4.1'
 }

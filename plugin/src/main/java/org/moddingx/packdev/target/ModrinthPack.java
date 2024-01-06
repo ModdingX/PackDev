@@ -58,6 +58,7 @@ public class ModrinthPack<T extends ModFile> extends BaseTargetTask<T> {
             case LoaderConstants.FORGE -> dependencies.addProperty("forge", this.settings.loaderVersion());
             case LoaderConstants.FABRIC -> dependencies.addProperty("fabric-loader", this.settings.loaderVersion());
             case LoaderConstants.QUILT -> dependencies.addProperty("quilt-loader", this.settings.loaderVersion());
+            case LoaderConstants.NEOFORGE -> dependencies.addProperty("neoforge", this.settings.loaderVersion());
             default -> throw new IllegalStateException("Loader not supported by Modrinth: " + this.settings.loader());
         }
         json.add("dependencies", dependencies);

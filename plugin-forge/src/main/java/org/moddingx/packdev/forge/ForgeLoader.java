@@ -102,8 +102,7 @@ public class ForgeLoader implements ModLoader<Void> {
 
     private static void addRunConfig(Project project, PackPaths paths, UserDevExtension ext, String name, Side side, SourceSet commonMods, SourceSet additionalMods) {
         String capitalized = Util.capitalize(name);
-        String taskName = "run" + capitalized;
-        File workingDir = project.file(taskName);
+        File workingDir = project.file("runs/" + name);
         ext.getRuns().create(name, run -> {
             run.workingDirectory(workingDir);
             run.property("forge.logging.console.level", "info");

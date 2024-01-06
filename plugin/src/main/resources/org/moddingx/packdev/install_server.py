@@ -30,6 +30,8 @@ def setup_server():
     
     if loader == 'forge':
         install_forge(mcv, mlv)
+    elif loader == 'neoforge':
+        install_neoforge(mlv)
     elif loader == 'fabric':
         install_fabric(insv, mcv, mlv)
     elif loader == 'quilt':
@@ -86,6 +88,14 @@ def install_forge(mcv: str, mlv: str):
         apply_log4j_fix('https://files.minecraftforge.net/log4shell/1.12/log4j2_server.xml', 'log4j2_server.xml')
     elif is_major_mc(mcv, '1.7') or is_major_mc(mcv, '1.8') or is_major_mc(mcv, '1.9') or is_major_mc(mcv, '1.10') or is_major_mc(mcv, '1.11'):
         apply_log4j_fix('https://files.minecraftforge.net/log4shell/1.7/log4j2_server.xml', 'log4j2_server.xml')
+
+
+def install_neoforge(mlv: str):
+    print('Installing NeoForge')
+    run_installer(
+        f'https://maven.neoforged.net/releases/net/neoforged/neoforge/{mlv}/neoforge-{mlv}-installer.jar',
+        ['--install-server']
+    )
 
 
 def install_fabric(insv: str, mcv: str, mlv: str):

@@ -6,9 +6,9 @@ plugins {
 dependencies {
     api('com.google.code.findbugs:jsr305') { version { strictly '[3.0.2,)'; prefer '3.0.2' } }
     api('com.google.code.gson:gson') { version { strictly '[2.10.1,)'; prefer '2.10.1' } }
-    api('com.google.guava:guava') { version { strictly '[32.0.1-jre,)'; prefer '32.0.1-jre' } }
-    api('commons-io:commons-io') { version { strictly '[2.13.0,)'; prefer '2.13.0' } }
-    api('org.moddingx:CurseWrapper') { version { strictly '[3.2,4.0)'; prefer '3.2' } }
+    api('com.google.guava:guava') { version { strictly '[32.1.3-jre,)'; prefer '32.1.3-jre' } }
+    api('commons-io:commons-io') { version { strictly '[2.15.1,)'; prefer '2.15.1' } }
+    api('org.moddingx:CurseWrapper') { version { strictly '[4.0,5.0)'; prefer '4.0' } }
     api('org.moddingx:LauncherLib') { version { strictly '[1.1.1,1.2.0)'; prefer '1.1.1' } }
 }
 
@@ -24,9 +24,11 @@ gradlePlugin {
 jar {
     dependsOn project(':plugin-forge').jar
     dependsOn project(':plugin-fabric').jar
+    dependsOn project(':plugin-neoforge').jar
     
     from zipTree(project(':plugin-forge').jar.archiveFile), { exclude 'META-INF/**' }
     from zipTree(project(':plugin-fabric').jar.archiveFile), { exclude 'META-INF/**' }
+    from zipTree(project(':plugin-neoforge').jar.archiveFile), { exclude 'META-INF/**' }
 }
 
 publishing {
