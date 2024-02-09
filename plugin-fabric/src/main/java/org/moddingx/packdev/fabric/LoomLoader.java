@@ -110,20 +110,20 @@ public abstract class LoomLoader implements ModLoader<Void> {
     
     private void configureRun(Project project, PackPaths paths, LoomGradleExtensionAPI loom, String name, Side side, Configuration configuration) {
         String capitalized = Util.capitalize(name);
-        String taskName = "run" + capitalized;
+        String workingDir = "runs/" + name;
 
         RunConfigSettings settings = loom.getRunConfigs().maybeCreate(name);
         settings.environment(side.id);
         settings.defaultMainClass(side == Side.CLIENT ? Constants.Knot.KNOT_CLIENT : Constants.Knot.KNOT_SERVER);
-        settings.runDir("runs/" + name);
+        settings.runDir(workingDir);
 
         // Delete old mods from the mods folder, so we correctly handle mod removals.
         Delete deleteTask = project.getTasks().create("delete" + capitalized + "Data", Delete.class);
-        deleteTask.delete(new File(project.file(taskName), "mods"));
+        deleteTask.delete(new File(project.file(workingDir), "mods"));
         
         Copy copyTask = project.getTasks().create("copy" + capitalized + "Data", Copy.class);
         copyTask.dependsOn(deleteTask);
-        copyTask.setDestinationDir(project.file("runs/" + name));
+        copyTask.setDestinationDir(project.file(workingDir));
         for (Path path : paths.getOverridePaths(side)) {
             copyTask.from(project.fileTree(path.toFile()));
         }
