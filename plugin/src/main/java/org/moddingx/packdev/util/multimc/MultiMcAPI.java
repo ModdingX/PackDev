@@ -20,7 +20,8 @@ public class MultiMcAPI {
     public static final Map<String, LoaderData> LOADER_UIDS = Map.of(
             LoaderConstants.FORGE, new LoaderData("net.minecraftforge", null),
             LoaderConstants.FABRIC, new LoaderData("net.fabricmc.fabric-loader", "net.fabricmc.intermediary"),
-            LoaderConstants.QUILT, new LoaderData("org.quiltmc.quilt-loader", "net.fabricmc.intermediary")
+            LoaderConstants.QUILT, new LoaderData("org.quiltmc.quilt-loader", "net.fabricmc.intermediary"),
+            LoaderConstants.NEOFORGE, new LoaderData("net.neoforged", null)
     );
     
     public static final Gson GSON;

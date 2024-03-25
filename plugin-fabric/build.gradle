@@ -5,6 +5,6 @@ repositories {
 
 dependencies {
     compileOnly project(':plugin')
-    compileOnly 'net.fabricmc:fabric-loom:1.5.7'
-//    compileOnly 'org.quiltmc:loom:1.4.1'
+    compileOnly 'net.fabricmc:fabric-loom:1.6.3'
+//    compileOnly 'org.quiltmc:loom:1.5.7'
 }
