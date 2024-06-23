@@ -6,7 +6,7 @@ import java.net.URI;
 
 public class CurseUtil {
 
-    public static final CurseWrapper API = new CurseWrapper(URI.create("https://curse.melanx.de/"));
+    public static final CurseWrapper API = new CurseWrapper(URI.create("https://curse.moddingx.org/"));
     public static final URI CURSE_MAVEN = URI.create("https://www.cursemaven.com");
 
     public static URI curseMaven(String endpoint) {
