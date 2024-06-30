@@ -1,10 +1,10 @@
 package org.moddingx.packdev;
 
+import jakarta.annotation.Nullable;
 import org.apache.commons.io.file.PathUtils;
 import org.gradle.api.Project;
 import org.moddingx.launcherlib.util.Side;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

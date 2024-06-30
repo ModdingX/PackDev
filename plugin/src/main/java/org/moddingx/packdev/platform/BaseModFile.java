@@ -1,6 +1,6 @@
 package org.moddingx.packdev.platform;
 
-import org.apache.commons.io.input.CountingInputStream;
+import com.google.common.io.CountingInputStream;
 import org.gradle.api.Project;
 import org.moddingx.packdev.cache.PackDevCache;
 import org.moddingx.packdev.util.curse.MurmurHasher;
@@ -109,7 +109,7 @@ public abstract class BaseModFile implements ModFile {
                 while (current.read(buffer) >= 0);
             }
             if (counter != null) {
-                result.put("size", ComputedHash.ofSignedLong(counter.getByteCount()));
+                result.put("size", ComputedHash.ofSignedLong(counter.getCount()));
             }
             for (Map.Entry<HashAlgorithm, MessageDigest> entry : digests.entrySet()) {
                 result.put(entry.getKey().id, ComputedHash.of(entry.getValue().digest(), entry.getKey().bits));

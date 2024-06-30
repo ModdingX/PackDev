@@ -1,6 +1,7 @@
 package org.moddingx.packdev.util.hash;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
+
 import java.math.BigInteger;
 import java.util.Locale;
 import java.util.Objects;

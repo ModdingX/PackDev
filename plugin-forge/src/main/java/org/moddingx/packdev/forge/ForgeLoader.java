@@ -1,5 +1,6 @@
 package org.moddingx.packdev.forge;
 
+import jakarta.annotation.Nonnull;
 import net.minecraftforge.gradle.mcp.ChannelProvidersExtension;
 import net.minecraftforge.gradle.mcp.tasks.GenerateSRG;
 import net.minecraftforge.gradle.userdev.DependencyManagementExtension;
@@ -24,7 +25,6 @@ import org.moddingx.packdev.loader.ModLoader;
 import org.moddingx.packdev.platform.ModFile;
 import org.moddingx.packdev.util.Util;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,5 +1,6 @@
 package org.moddingx.packdev;
 
+import jakarta.annotation.Nullable;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.plugins.UnknownPluginException;
@@ -16,7 +17,6 @@ import org.moddingx.packdev.target.ServerPack;
 import org.moddingx.packdev.util.LoaderConstants;
 import org.moddingx.packdev.util.Util;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,5 +1,6 @@
 package org.moddingx.packdev.platform.curse;
 
+import jakarta.annotation.Nullable;
 import org.gradle.api.Project;
 import org.moddingx.cursewrapper.api.response.FileInfo;
 import org.moddingx.cursewrapper.api.response.ProjectInfo;
@@ -10,7 +11,6 @@ import org.moddingx.packdev.platform.BaseModFile;
 import org.moddingx.packdev.util.curse.CurseUtil;
 import org.moddingx.packdev.util.hash.ComputedHash;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URI;
 import java.security.NoSuchAlgorithmException;

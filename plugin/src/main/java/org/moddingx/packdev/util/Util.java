@@ -2,6 +2,7 @@ package org.moddingx.packdev.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.Strictness;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UnknownTaskException;
@@ -16,7 +17,7 @@ public class Util {
     static {
         GsonBuilder builder = new GsonBuilder();
         builder.disableHtmlEscaping();
-        builder.setLenient();
+        builder.setStrictness(Strictness.LENIENT);
         builder.setPrettyPrinting();
         GSON = builder.create();
     }

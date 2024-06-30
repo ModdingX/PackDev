@@ -3,6 +3,8 @@ package org.moddingx.packdev;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -23,8 +25,6 @@ import org.moddingx.packdev.util.DependencyConstants;
 import org.moddingx.packdev.util.MoonstoneTask;
 import org.moddingx.packdev.util.Util;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.Reader;

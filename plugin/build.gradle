@@ -4,12 +4,11 @@ plugins {
 }
 
 dependencies {
-    api('com.google.code.findbugs:jsr305') { version { strictly '[3.0.2,)'; prefer '3.0.2' } }
-    api('com.google.code.gson:gson') { version { strictly '[2.10.1,)'; prefer '2.10.1' } }
-    api('com.google.guava:guava') { version { strictly '[33.0.0-jre,)'; prefer '33.0.0-jre' } }
-    api('commons-io:commons-io') { version { strictly '[2.15.1,)'; prefer '2.15.1' } }
-    api('org.moddingx:CurseWrapper') { version { strictly '[4.0,5.0)'; prefer '4.0' } }
-    api('org.moddingx:LauncherLib') { version { strictly '[1.1.1,1.2.0)'; prefer '1.1.1' } }
+    api('jakarta.annotation:jakarta.annotation-api') { version { strictly '[3.0.0,)'; prefer '3.0.0' } }
+    api('com.google.code.gson:gson') { version { strictly '[2.11.0,)'; prefer '2.11.0' } }
+    api('com.google.guava:guava') { version { strictly '[33.2.1-jre,)'; prefer '33.2.1-jre' } }
+    api('org.moddingx:CurseWrapper') { version { strictly '[5.0,6.0)'; prefer '5.0' } }
+    api('org.moddingx:LauncherLib') { version { strictly '[2.1.0,3.0.0)'; prefer '2.1.0' } }
 }
 
 gradlePlugin {
@@ -50,7 +49,9 @@ publishing {
     }
     repositories {
         maven {
-            url rootProject.file('../moddingx/maven')
+            name 'moddingx'
+            url 'https://maven.moddingx.org/release'
+            credentials(PasswordCredentials)
         }
     }
 }

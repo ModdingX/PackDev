@@ -1,10 +1,9 @@
 subprojects {
     apply plugin: 'java-library'
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
     repositories {
         mavenCentral()
         maven { url = 'https://maven.moddingx.org' }
-        maven { url = 'https://maven.minecraftforge.net' } // For SrgUtils
     }
 }

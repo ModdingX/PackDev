@@ -1,6 +1,7 @@
 package org.moddingx.packdev.util.hash;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;

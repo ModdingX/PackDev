@@ -4,12 +4,12 @@ import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
 import groovy.lang.GroovyObjectSupport;
 import groovy.transform.Internal;
+import jakarta.annotation.Nullable;
 import org.gradle.api.Action;
 import org.moddingx.packdev.api.CurseProperties;
 import org.moddingx.packdev.loader.LoaderSettings;
 import org.moddingx.packdev.loader.LoaderSettingsConsumer;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

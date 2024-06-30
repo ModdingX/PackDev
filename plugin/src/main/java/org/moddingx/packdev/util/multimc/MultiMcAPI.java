@@ -2,12 +2,14 @@ package org.moddingx.packdev.util.multimc;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
+import jakarta.annotation.Nullable;
 import org.moddingx.packdev.util.LoaderConstants;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 import java.util.function.Function;
@@ -119,11 +121,15 @@ public class MultiMcAPI {
     }
 
     private static JsonObject fetch(String endpoint) throws IOException {
-        URL url = new URL(ENDPOINT + endpoint);
-        Reader reader = new InputStreamReader(url.openStream());
-        JsonObject json = GSON.fromJson(reader, JsonObject.class);
-        reader.close();
-        return json;
+        try {
+            URL url = new URI(ENDPOINT + endpoint).toURL();
+            Reader reader = new InputStreamReader(url.openStream());
+            JsonObject json = GSON.fromJson(reader, JsonObject.class);
+            reader.close();
+            return json;
+        } catch (URISyntaxException e) {
+            throw new IOException(e);
+        }
     }
 
     public record LoaderData(@Nullable String loaderUid, @Nullable String minecraftUid) {}

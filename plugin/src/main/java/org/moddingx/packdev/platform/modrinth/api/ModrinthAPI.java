@@ -1,11 +1,11 @@
 package org.moddingx.packdev.platform.modrinth.api;
 
 import com.google.gson.*;
+import jakarta.annotation.Nullable;
 import org.moddingx.launcherlib.util.Either;
 import org.moddingx.packdev.platform.ModFile;
 import org.moddingx.packdev.util.hash.ComputedHash;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;

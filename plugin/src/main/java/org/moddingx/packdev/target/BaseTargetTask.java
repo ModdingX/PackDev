@@ -1,5 +1,6 @@
 package org.moddingx.packdev.target;
 
+import jakarta.annotation.Nonnull;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.file.copy.CopyAction;
 import org.gradle.api.provider.Property;
@@ -14,7 +15,6 @@ import org.moddingx.packdev.PackSettings;
 import org.moddingx.packdev.platform.ModFile;
 import org.moddingx.packdev.platform.ModdingPlatform;
 
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.nio.file.Files;

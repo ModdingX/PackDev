@@ -1,11 +1,11 @@
 package org.moddingx.packdev.forge;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import net.minecraftforge.gradle.mcp.ChannelProvider;
 import net.minecraftforge.gradle.mcp.MCPRepo;
 import org.gradle.api.Project;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;

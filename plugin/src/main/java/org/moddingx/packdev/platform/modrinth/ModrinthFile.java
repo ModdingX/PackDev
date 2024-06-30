@@ -1,5 +1,6 @@
 package org.moddingx.packdev.platform.modrinth;
 
+import jakarta.annotation.Nullable;
 import org.gradle.api.Project;
 import org.moddingx.launcherlib.util.Artifact;
 import org.moddingx.launcherlib.util.Side;
@@ -10,7 +11,6 @@ import org.moddingx.packdev.platform.modrinth.api.ProjectInfo;
 import org.moddingx.packdev.platform.modrinth.api.VersionInfo;
 import org.moddingx.packdev.util.hash.ComputedHash;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URI;
 import java.security.NoSuchAlgorithmException;

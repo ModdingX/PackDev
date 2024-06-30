@@ -1,12 +1,12 @@
 package org.moddingx.packdev.cache;
 
 import com.google.gson.*;
+import jakarta.annotation.Nullable;
 import org.gradle.api.Project;
 import org.moddingx.launcherlib.launcher.Launcher;
 import org.moddingx.packdev.platform.ModdingPlatform;
 import org.moddingx.packdev.util.hash.ComputedHash;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
