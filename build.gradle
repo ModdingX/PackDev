@@ -1,3 +1,6 @@
+allprojects {
+    group 'org.moddingx'
+}
 subprojects {
     apply plugin: 'java-library'
     java.toolchain.languageVersion = JavaLanguageVersion.of(21)
