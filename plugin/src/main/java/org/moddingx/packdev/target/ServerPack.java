@@ -1,5 +1,6 @@
 package org.moddingx.packdev.target;
 
+import groovy.json.StringEscapeUtils;
 import org.moddingx.launcherlib.util.Side;
 import org.moddingx.packdev.PackDevPlugin;
 import org.moddingx.packdev.PackSettings;
@@ -14,13 +15,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.*;
 import java.nio.file.attribute.PosixFilePermission;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class ServerPack<T extends ModFile> extends BaseTargetTask<T> {
 
+    private static final Pattern DOCKERFILE_TEMPLATE_PATTERN = Pattern.compile("\\$\\{(\\w+)(#?)\\}");
     private static final Map<String, String> INSTALLER_VERSIONS = Map.of(
             LoaderConstants.FORGE, "", // Forge has no separate installer
             LoaderConstants.FABRIC, "1.0.0",
@@ -61,13 +61,26 @@ public class ServerPack<T extends ModFile> extends BaseTargetTask<T> {
                 if (dockerFile == null) {
                     throw new IllegalStateException("Can't build server pack: Dockerfile not found.");
                 }
+                Map<String, String> replaces = Map.of(
+                        "jdk", Integer.toString(this.settings.java()),
+                        "name", this.settings.name(),
+                        "version", this.settings.version(),
+                        "minecraft", this.settings.minecraft()
+                );
                 try (
                         BufferedReader reader = new BufferedReader(new InputStreamReader(dockerFile, StandardCharsets.UTF_8));
                         BufferedWriter writer = Files.newBufferedWriter(fs.getPath("Dockerfile"), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
                 ) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        writer.write(line.replace("${jdk}", Integer.toString(this.settings.java())) + "\n");
+                        String replacedLine = DOCKERFILE_TEMPLATE_PATTERN.matcher(line).replaceAll(r -> {
+                            String key = r.group(1);
+                            boolean quote = Objects.equals(r.group(2), "#");
+                            String replacement = replaces.getOrDefault(key, null);
+                            if (replacement == null) throw new IllegalStateException("Invalid replacement in Dockerfile template: " + key);
+                            return quote ? StringEscapeUtils.escapeJava(replacement) : replacement;
+                        });
+                        writer.write(replacedLine + "\n");
                     }
                 }
             }
