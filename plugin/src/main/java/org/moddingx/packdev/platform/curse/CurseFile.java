@@ -93,7 +93,7 @@ public class CurseFile extends BaseModFile {
         if (hashes.contains("size")) {
             computed.put("size", ComputedHash.ofSignedLong(this.fileInfo().fileSize()));
         } else if (hashes.contains("fingerprint")) {
-            computed.put("fingerprint", ComputedHash.of(this.fileInfo().fingerprint(), 32));
+            computed.put("fingerprint", ComputedHash.of(this.fileInfo().fingerprint() & 0xFFFFFFFFl, 32));
         } else if (hashes.contains("sha1") && this.fileInfo().hashes().containsKey("sha1")) {
             computed.put("sha1", ComputedHash.of(this.fileInfo().hashes().get("sha1"), 160));
         } else if (hashes.contains("md5") && this.fileInfo().hashes().containsKey("md5")) {
