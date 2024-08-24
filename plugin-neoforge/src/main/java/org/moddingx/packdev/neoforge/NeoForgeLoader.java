@@ -5,8 +5,9 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.tasks.*;
-import org.gradle.api.tasks.compile.JavaCompile;
+import org.gradle.language.jvm.tasks.ProcessResources;
 import org.moddingx.launcherlib.util.Artifact;
 import org.moddingx.launcherlib.util.Side;
 import org.moddingx.packdev.PackPaths;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class NeoForgeLoader implements ModLoader<Void> {
@@ -60,6 +62,7 @@ public class NeoForgeLoader implements ModLoader<Void> {
             set.setRuntimeClasspath(serverMods);
         });
 
+        setupDummyModMetadata(project);
         //noinspection unchecked
         NamedDomainObjectContainer<Run> runs = Util.getExtension(project, "runs", NamedDomainObjectContainer.class);
         addRun(project, paths, runs, "client", Side.CLIENT, mainSources, clientDepSources);
@@ -92,6 +95,35 @@ public class NeoForgeLoader implements ModLoader<Void> {
         //
     }
 
+    private static void setupDummyModMetadata(Project project) {
+        // Recent NeoForge versions need an actual mod manifest to be present in order to load
+        // Therefore we put a default manifest into the main resources.
+        ProcessResources res = Util.findTask(project, "processResources", ProcessResources.class);
+        if (res == null) throw new IllegalStateException("Cannot set up PackDev run: processResources task not found");
+        Path manifestDir = project.getLayout().getBuildDirectory().get().getAsFile().toPath().resolve("createDummyManifest");
+        Path manifestPath = manifestDir.resolve("neoforge.mods.toml");
+        TaskProvider<DefaultTask> createManifest = project.getTasks().register("createDummyManifest", DefaultTask.class, task -> {
+            task.doLast(t -> {
+                try {
+                    Files.createDirectories(manifestDir);
+                    Files.writeString(manifestDir.resolve("neoforge.mods.toml"), """
+                        modLoader="lowcodefml"
+                        loaderVersion="(0,)"
+                        license="packdev_dummy"
+                        mods=[{modId="packdev_dummy"}]
+                        """, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        });
+        res.dependsOn(createManifest);
+        res.from(manifestPath.toFile(), spec -> {
+            spec.into("META-INF");
+            spec.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+        });
+    }
+    
     private static void addRun(Project project, PackPaths paths, NamedDomainObjectContainer<Run> runs, String name, Side side, SourceSet commonMods, SourceSet additionalMods) {
         String capitalized = Util.capitalize(name);
         File workingDir = project.file("runs/" + name);
@@ -110,24 +142,11 @@ public class NeoForgeLoader implements ModLoader<Void> {
             }
         });
 
-        // Create dummy directories needed by modlauncher / securejarhandler to construct the union fs
-        JavaCompile jc = Util.findTask(project, "compileJava", JavaCompile.class);
-        if (jc == null) throw new IllegalStateException("Cannot set up PackDev run: compileJava task not found");
-        TaskProvider<DefaultTask> createDirTask = project.getTasks().register("prepare" + capitalized + "Data", DefaultTask.class, task -> {
-            task.doLast(t -> {
-                try {
-                    Files.createDirectories(jc.getDestinationDirectory().getAsFile().get().toPath());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        });
-
         runs.create(name, run -> {
             run.modSources(commonMods, additionalMods);
             run.systemProperty("production", "true");
             run.workingDirectory(workingDir);
-            run.dependsOn(copyTask, createDirTask);
+            run.getDependsOn().add(copyTask);
         });
     }
 }

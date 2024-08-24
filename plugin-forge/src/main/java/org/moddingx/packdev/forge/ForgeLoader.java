@@ -136,7 +136,6 @@ public class ForgeLoader implements ModLoader<Void> {
         JavaCompile jc = Util.findTask(project, "compileJava", JavaCompile.class);
         if (jc == null) throw new IllegalStateException("Cannot set up PackDev run config: compileJava task not found");
         Task createDirTask = project.getTasks().create("prepare" + capitalized + "Data", DefaultTask.class);
-        //noinspection Convert2Lambda
         createDirTask.doLast(new Action<>() {
             
             @Override

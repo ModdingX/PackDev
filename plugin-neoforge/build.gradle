@@ -5,5 +5,5 @@ repositories {
 
 dependencies {
     compileOnly project(':plugin')
-    compileOnly 'net.neoforged.gradle:userdev:7.0.152'
+    compileOnly 'net.neoforged.gradle:userdev:7.0.161'
 }
