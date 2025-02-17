@@ -5,9 +5,9 @@ plugins {
 
 dependencies {
     api('jakarta.annotation:jakarta.annotation-api') { version { strictly '[3.0.0,)'; prefer '3.0.0' } }
-    api('com.google.code.gson:gson') { version { strictly '[2.11.0,)'; prefer '2.11.0' } }
-    api('com.google.guava:guava') { version { strictly '[33.3.0-jre,)'; prefer '33.3.0-jre' } }
-    api('commons-io:commons-io') { version { strictly '[2.16.1,)'; prefer '2.16.1' } }
+    api('com.google.code.gson:gson') { version { strictly '[2.12.1,)'; prefer '2.12.1' } }
+    api('com.google.guava:guava') { version { strictly '[33.4.0-jre,)'; prefer '33.4.0-jre' } }
+    api('commons-io:commons-io') { version { strictly '[2.18.0,)'; prefer '2.18.0' } }
     api('org.moddingx:CurseWrapper') { version { strictly '[5.0,6.0)'; prefer '5.0' } }
     api('org.moddingx:LauncherLib') { version { strictly '[2.1.0,3.0.0)'; prefer '2.1.0' } }
 }

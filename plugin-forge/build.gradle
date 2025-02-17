@@ -4,5 +4,5 @@ repositories {
 
 dependencies {
     compileOnly project(':plugin')
-    compileOnly 'net.minecraftforge.gradle:ForgeGradle:6.0.26'
+    compileOnly 'net.minecraftforge.gradle:ForgeGradle:6.0.30'
 }
