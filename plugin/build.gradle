@@ -33,8 +33,7 @@ jar {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
+        pluginMaven(MavenPublication) {
             groupId = rootProject.group
             artifactId = rootProject.name
             version = rootProject.version
